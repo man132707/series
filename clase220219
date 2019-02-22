@@ -1,0 +1,45 @@
+install.packages("forecast")
+require(forecast)
+install.packages("ggplot2")
+require(ggplot2)
+install.packages("fpp2")
+require(fpp2)
+############### netflix
+net <- read.csv("C://Users//ALUMNO-H2//Desktop//NFLX.MX.csv")
+netts <- ts (net, start = 2018, frequency = 252)
+plot(netts)
+##### metodo media
+meanf (st, h)
+media <- meanf (netts, 20)
+plot (media)
+################## metodo del ingenuo
+naive (st, h)
+ingenuo <- naive(netts, 20)
+plot (ingenuo)
+ingenuo
+################# metodo del ingenuo estacional
+snaive(st, h)
+ingestacional <- snaive (netts, 252) 
+plot (ingestacional)
+ingestacional
+################# metodo de la deriva
+rwf (y, h drift = TRUE)
+deriva <- rwf(netts, 20, drift = TRUE)
+plot(deriva)
+########## window sirve para cortar una serie de tiempo
+cerveza2 <-window(ausbeer, start=1992, end=c(2007,4))
+cerveza2
+help(ausbeer)
+#gracia algunos pronosticos
+autoplot(cerveza2)+
+  autolayer(meanf(cerveza2, h=11), series = "media", PI=FALSE)+
+  autolayer(naive(cerveza2, h=11), series = "ingenuo", PI=FALSE)+
+  autolayer(rwf(cerveza2, h=11, drift = TRUE), series = "deriva", PI=FALSE)+
+  autolayer(snaive(cerveza2, h=11), series = "Ingenuo estacional", PI=FALSE)+
+  ggtitle("pronosticos de producción cerveza")+ xlab("año")+
+  ylab("miles de litros") +guides(colour=guide_legend(title = "pronostico"))
+
+######## Tarea en casa con una serie de tiempo que yo elija
+########## graficar con ggplot2 los 4 metodos de pronosticos
+########### se quedan con el metodo mas preciso y lo describen junto con los
+### componentes de la serie 
