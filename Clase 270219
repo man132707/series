@@ -1,1 +1,48 @@
-
+install.packages("ggplot2")
+require(ggplot2)
+install.packages("forecast")
+require(forecast)
+install.packages("xts")
+require(xts)
+install.packages("fpp2")
+require(fpp2)
+#prueba de Portmanteau para autocorrelación
+#para r 
+#Box.test(res, lag = 10, fitdf = 0)
+#lag son los residuos que tomara para hacer el analisis
+#La prueba más precisa Ljung-box
+#p-value mayor a 0.05 implica que los residuos no son autocorrellacionados 
+#Box.test(res, lag = 10, fitdf = 0, type = Lju)
+#suavisado exporencial simple toma un mayor peso al ultimo dato
+# +1|T= aYT
+#### crecimiento de mexico porcentual
+pib <- read.csv("C://Users//ALUMNO-D11//Desktop//crec mex.csv")
+pibt <- ts(pib, frequency = 1, start = 1961)
+mod1 <- ses(pibt, alpha = 0.1, initial = "simple", h=8)
+mod2 <- ses(pibt, alpha = 0.3, initial = "simple", h=8)
+mod3 <- ses(pibt, alpha = 0.9, h=8)
+plot(mod1, ylab = "pib",
+     xlab = "año", main = "pib", type = "o")
+lines(fitted(mod1), col="blue", type = "o")
+lines(fitted(mod2), col="red", type = "o")
+lines(fitted(mod3), col="green", type = "o")
+legend("topleft", lty = 1, col = c(1,"blue","red","green"),
+       c("data",expression(alpha == 0.1), expression(alpha == 0.3),
+         expression(alpha == 0.9)),pch = 1)
+##### ejercicio 
+# con la funcion windows separar el pib 
+# en datos de entrenamiento y datos prueba 20%
+# y graficar los modelos solo en lo que corresponden a 
+# los datos de prueba los valores ajustados de 3 modelos
+pib1 <- window(pibt, start = 2005, end= 2017)
+mod1 <- ses(pib1, alpha = 0.1, initial = "simple", h=8)
+mod2 <- ses(pib1, alpha = 0.3, initial = "simple", h=8)
+mod3 <- ses(pib1, alpha = 0.9, h=8)
+plot(mod1, ylab = "pib",
+     xlab = "año", main = "pib", type = "o")
+lines(fitted(mod1), col="blue", type = "o")
+lines(fitted(mod2), col="red", type = "o")
+lines(fitted(mod3), col="green", type = "o")
+legend("topleft", lty = 1, col = c(1,"blue","red","green"),
+       c("data",expression(alpha == 0.1), expression(alpha == 0.3),
+         expression(alpha == 0.9)),pch = 1)
