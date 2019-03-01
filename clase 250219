@@ -1,0 +1,66 @@
+install.packages("forecast")
+require(forecast)
+install.packages("ggplot2")
+require(ggplot2)
+install.packages("fpp2")
+require(fpp2)
+###### valores ajustados, cada observacion en una seried e tiempo se puede pronosticar
+#los valores ajustados estan muy relacionados a los pronosticos los denotamos
+# y gorro t = yt-1 +c
+#Analisis de residuales, los residuos de una serie de tiempo nos sirven para saber que tan bueno o malo ha sido nuestro pronostico
+#lo vamos a definir como et= yt - gorro t.
+#dos factores importantes 1 los residuos no esten correlacionados, 2 los residuos tengan media 0
+#Si alguna de estas propiedades no se cumple entonces puede modificarse para dar mejor pronostico
+#propiedades adicionales - los residuos tienen variable constante
+# los residuos se distribuyen normalmente
+# a veces la aplicacion de una transformacion box-cox para corregir
+# para sacar los residuales para el metodo del ingenuo
+help("goog200")
+pronos <- naive (goog200)
+names (pronos)
+res1 <- residuals(naive(goog200))
+autoplot (goog200)
+#primer paso ver graficamente si hay errores
+autoplot (res1)
+# segundo paso ver si se distribuye normalmente
+gghistogram(res1) + ggtitle("histograma de residuales")
+# analisis de correlacion 
+ggAcf(res1)
+# si los residuos pasan la linea azul significa que estan autocorrelacionados
+# estamos buscando que no pasen las fronteras
+# si tiene varianza constante y media cercana a cero se puede considerar que es un ruido blanco
+# Si es un ruido blanco puede garantizar un mejor pronostico
+### Crecimiento poblacional 
+pob1 <- read.csv("C://Users//man13//OneDrive//Escritorio//Series de tiempo//Nueva carpeta//pobmex.csv")
+pob1ts <- ts (pob1, start = 1960, frequency = 1)
+plot(pob1ts, xlab = "Tiempo", ylab = "Crecimiento poblacional %", main = "Crecimiento poblacional en México 1961-2017")
+ingestacional <- snaive(pob1ts, 5)
+plot(ingestacional, xlab = "Tiempo", ylab = "Crecimiento poblacional %", main = "Crecimiento poblacional en México 1961-2017" )
+res2 <- residuals(snaive(pob1ts))
+view(pob1ts)
+autoplot(res2)
+gghistogram(res2)+ ggtitle("Histograma de residuales")
+ggAcf(res2)
+
+
+#### crecimiento PIB anual 
+crec1 <- read.csv("C://Users//man13//OneDrive//Escritorio//Series de tiempo//Nueva carpeta//mexcrecimiento.csv")
+crec1ts <- ts (crec1, start = 1961, frequency = 1)
+plot(crec1ts,xlab = "Tiempo", ylab = "Crecimiento económico %", main = "Crecimiento económico en México 1960-2017")
+media <- meanf(crec1ts, 5)
+plot(media, xlab = "Tiempo", ylab = "Crecimiento económico %", main = "Crecimiento económico en México 1960-2017")
+res3 <- residuals(meanf(crec1ts))
+autoplot(res3)
+gghistogram(res3)+ ggtitle("Histograma de residuales")
+ggAcf(res3)
+
+###### acciones de televisa 1 año
+tel1 <- read.csv("C://Users//man13//OneDrive//Escritorio//Series de tiempo//Nueva carpeta//TLEVISACPO.MX.csv")
+tel1ts <- ts (tel1, start =2018, frequency = 252)
+plot(tel1ts, xlab = "Tiempo", ylab = "Precio", main = "Acciones de Televisa 2018-2019")
+deriva <- rwf(tel1ts, 5, drift = TRUE)
+plot(deriva, xlab = "Tiempo", ylab = "Precio", main = "Acciones de Televisa 2018-2019")
+res4 <- residuals(rwf(tel1ts, drift = TRUE))
+autoplot(res4)
+gghistogram(res4) + ggtitle("Histograma de residuales")
+ggAcf(res4)
