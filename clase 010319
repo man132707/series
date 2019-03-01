@@ -1,0 +1,31 @@
+####errores de pronostico
+
+#los errores d epronostivo son diferentes de los residuos de dos maneras, primero los residuos se calculan en le ocnjunto de entrenamiento mientras que los errores de pronostico se calculan en el conjunto de prueba
+#podemos medir la precisoon del pronostico al resumir los errores de pronostico de diferentes maneras
+#Errores de escala###
+#error absoluto medio 
+#error cuadratico medio: 
+require (forecast)
+require (ggplot2)
+require (fpp2)
+beer2 <-window(ausbeer, start=1992, end=c(2007,4))
+beerfit1 <- meanf(beer2, h=10)
+beerfit2 <- rwf(beer2, h=10)
+beerfit3 <- snaive(beer2, h=10)
+
+autoplot(window(ausbeer, start = 1992))+
+  autolayer(beerfit1, series = "media", PI=FALSE)+
+  autolayer(beerfit2, series = "ingenuo", PI=FALSE)+
+  autolayer(beerfit3, series = "ingenuo estacional", PI=FALSE)+
+  ggtitle("pronosticos de producción cerveza")+ xlab("año")+
+  ylab("litros") +guides(colour=guide_legend(title = "pronostico"))
+#la grafica muestra tres metodos de pronostico aplicados a la 
+#produccion de cerveza australiana trimestral utilizando datos
+#hasta finales de 2007, tambien se muestran los valores reales de 
+#2008 a 2010
+###### PARA SACAR LOS ERRORES
+beer3 <- window(ausbeer, start = 2008)
+accuracy(beerfit1, beer3)
+accuracy(beerfit2, beer3)
+accuracy(beerfit3, beer3)
+#los importantes son RSME MAE MAPE Tienen que ser cercano a 0
