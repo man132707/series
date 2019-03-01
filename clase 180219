@@ -1,0 +1,6 @@
+base1 <- read.csv("C://Users//ALUMNO-D12//Downloads//IndicadoresENOE_2019-02-20.csv")
+med1<-mean(base1$X10.2..Tasa.de.desocupación)
+med2<-mean(base1$X10.5..Tasa.de.trabajo.asalariado)
+covarman<-sum((base1$X10.2..Tasa.de.desocupación-med1)*(base1$X10.5..Tasa.de.trabajo.asalariado-med2))/55
+corrman<-covarman/(sqrt(var(base1$X10.2..Tasa.de.desocupación)*var(base1$X10.5..Tasa.de.trabajo.asalariado)))
+                   
