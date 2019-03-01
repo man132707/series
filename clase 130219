@@ -1,0 +1,33 @@
+base1 <- read.csv("C://Users//sala-D19.RTIC-D19//Documents//API_NY.GDP.MKTP.KD.ZG_DS2_es_csv_v2_10474617.csv")
+# abrir base de datos
+View(base1)
+base1ts <- ts(base1, start = 1961, end = 2017, frequency = 1)
+plot(base1ts)
+# es una base cìclica al no tener un comportamiento, con una tendencia a la baja 
+plot(base1ts, ylab= "% crecimiento anual del PIB en Mèxico", xlab="años")
+require (datasets)
+plot (EuStockMarkets)
+#para ponerle color
+ts.plot (EuStockMarkets, col = 1:4, xlab = "Años", 
+         ylab = "Ìndices principales bolsas europeas", main = "bolsas europeas")
+legend ("topleft", colnames(EuStockMarkets), lty = 1, col = 1:4, bty = "n")
+
+
+### ejercicio
+#bajar la tasa de desempleo del 2005 al 2017 
+# importarla en R
+#convertirla en serie de tiempo
+# grafica de la serie de tiempo: con los sig argumentos; Xlab, ylab, main y col
+# insertar comentarios qadentro de la gràfica 
+# por ejemplo cuando hay crisis esta tasa de incrementa
+
+base2 <- read.csv("C://Users//sala-D19.RTIC-D19//Documents//BIINEGI13022019160544.csv")
+# abrir base de datos
+View(base2)
+base2ts <- ts(base2, start = 2006, end = 2017, frequency = 12)
+plot.ts(base2ts)
+text (2009, 6, "crisis")
+ts.plot (base2ts, ylab= "% tasa de desempleo mensual en Mèxico", xlab="Años", main = "Tasa de desempleo")
+legend ("topleft", colnames(base2), lty = 3, col = 3, bty = "n")
+# abrir una cuenta en github
+
