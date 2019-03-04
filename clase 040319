@@ -1,0 +1,51 @@
+install.packages("forecast")
+require(forecast)
+install.packages("fpp2")
+require(fpp2)
+install.packages("ggplot2")
+require(ggplot2)
+### analizar 3 series 
+#### sin patrón = AMAZON
+amz <- read.csv("C://Users//sala-D19.RTIC-D19//Desktop//amazon.csv")
+amzts <- ts(amz, start = 2018, end= 2019, frequency = 252)
+amz2 <- window(amzts, start= c(2018,1), end = c(2019, 100))
+show(amz2)
+
+#### Pronóstico simple (INGENUO ESTACIONAL)
+ingestacional <- snaive(amzts, 10)
+plot(ingestacional)
+decompose(amzts, type = c("multiplicative"), filter = NULL)
+
+#### Comercio Tendencia
+com <- read.csv("C://Users//sala-D19.RTIC-D19//Desktop//comercio.csv")
+comts <- ts(com, start = 2008, end = 2018, frequency = 12)
+com2 <- window(comts, start= 2008, end = 2016)
+## Pronosticos
+comfit1 <- meanf(com2, h=24)
+comfit2 <- rwf(com2, h=24)
+comfit3 <- snaive(com2, h=24)
+
+autoplot(window(comts, start = 2008))+
+  autolayer(comfit1, series = "media", PI=FALSE)+
+  autolayer(comfit2, series = "ingenuo", PI=FALSE)+
+  autolayer(comfit3, series = "ingenuo estacional", PI=FALSE)+
+  ggtitle("pronosticos de comercio al por mayor")+ xlab("año")+
+  ylab("millones de pesos") +guides(colour=guide_legend(title = "pronostico"))
+
+com3 <- window(comts, start = 2016)
+accuracy(comfit1, com3)
+accuracy(comfit2, com3)
+accuracy(comfit3, com3)
+
+
+mod1 <- ses(com2, alpha = 0.1, initial = "simple", h=24)
+mod2 <- ses(com2, alpha = 0.3, initial = "simple", h=24)
+mod3 <- ses(com2, alpha = 0.9, h=24)
+plot(mod1, ylab = "Comercio al por mayor",
+     xlab = "año", main = "pib", type = "o")
+lines(fitted(mod1), col="blue", type = "o")
+lines(fitted(mod2), col="red", type = "o")
+lines(fitted(mod3), col="green", type = "o")
+legend("topleft", lty = 1, col = c(1,"blue","red","green"),
+       c("data",expression(alpha == 0.1), expression(alpha == 0.3),
+         expression(alpha == 0.9)),pch = 1)
