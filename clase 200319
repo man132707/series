@@ -1,0 +1,44 @@
+Estacionariedad y diferenciacion 
+una serie temporal estacionaria es aquella cuyas propiedades no dependen del momento en que se observa la serie
+por lo tanto las series temporales con tendencias o con la estacionalidad, no son estacionarias, la tendendencia y la estacionalidad 
+afectaran el valor de las series temporales en tiempos diferentes
+por otro lado una serie de tiempo de ruido blanco es estacionaria, no importa cuando la observes, debe verse muy parecida en cualquier momento
+algunos casos pueden ser confusos una serie temporal con comportameinto ciclico ( pero sin tendendencia o estacionalidad, es estacionaria.
+Esto se debe a que los ciclos no son de una longitud fija, por lo que antes de observar las series no podemos estar seguros de donde estaran
+los picos y los valles de los ciclos, 
+en generarl una serie estacionaria no tendra partrones predecibles a largo plazo, las graficas de tiempo mostraran que la serie 
+es aproximadamente horizontal (aunauqe  es posible que algun comportamiento ciclico, con una varianza constante.
+
+una forma de hacer una serie de tiempo no estacionaria a estacionaria: calcular las diferencias entre observaciones consecutivas.
+esto se conoce como diferenciacion.
+Transformaciones como lograritmos pueden ayudar a estabilizar la varianza de una serie de tiempo. la diferenciacion puede
+ayudar a estabilizar la media de una serie de tiempo eliminando (o reduciendo) la tendencia y la estacionalidad.
+ademas de observar la grafica temporal de los datos, la grafica acf tambien es util para identificar series temporales no estaiconarias
+para una serie de tiempo estacionaria el acf caera a cero relativamente rapido, mientras que el acf de datos no estacionarios disminuye lentamente
+
+el acf de la diferencia en el precio de las acciones de google se parece a un ruido blanco. no hay autocorrrelaciones fuera del limite del 95%
+esto sugiere que el cambio diario del precio de las acciones de google es escencialmente una cantidad aleatoria que no esta relaiconada
+cpon los dias anteriores
+
+CAMINATA ALEATORIA
+modelo de caminata aleatoria 
+la serie de diferenciada es el cambio entre observaciones consecutivas en la serie original y se puede escribir como
+yt*=yt-yt-1
+
+las series diferenciadas tendran solo los valores T-1, ya que no es posbible calcular una diferencia para la primera observacion
+
+yt-yt-1= Et
+
+cuando la serie diferenciada es un ruido blanco, el modelo para la serie odriginarl se puede escribir como
+donde et denota a un ruido blanco, reorganizar esto lleva a la "caminata aleatoria"
+
+yt = yt-1 + et
+
+Los modelos de caminata aleatoria se usan ampliamenta para datos no estacionarios, particularmente datos financieros y economicos
+los paseos aleatorios suelen tener
+largos periodos de tendencias aparentes hacia arriba o hacia abajo.
+cambios repentinos e impredecibles en la direccion.
+Los pronosticos de un modelo de caminata aleatoria son iguales a la ultima observacion, ya que los movimientos futuros son impredecibles,
+y es probable que esten arriba o abajo. por lo tanto el modelo aleatorio respalda pronosticos ingenuos, introducidos por primera vez en la seccion 3.1
+
+Para aplicar diferenciacion es: diff(serie)
