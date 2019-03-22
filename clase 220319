@@ -1,0 +1,34 @@
+Modelos autorregresivos
+en un modelo de regresion multiple, pronosticamos la variable de interes usando una compbinacion lineal de predictores. En un modelos 
+de autorregresion, pronosticamos la variable de interes utilizando una combinacion lineal de valores pasados en la variable. El termino
+autorregresion indica que es una regresion de la variable contra si misma.
+Asi, un modelo autorregresivo de ordem p se puede escribir como
+
+yt= c+01yt-1 +02yt-2 + ... + 0pyt-´+ Et
+
+donde et es un ruido blanco esto es como una regresion multiple pero con valores rrezagados de yt como predictores Nos referimos a esto como un
+AR (p) modelo, un modelo autorregresivo de orden p
+
+Los modelos autorregresivos son flexible para manejar diversos patrones de series de tiempo diferentes. Las dos series muestran un modelo
+AR (1) y un modelo AR(2) cambiando lo parametros 01... 0p se obtiene como resultado diferentes patrones de series. 
+La varianza del temino del error et solo cambiara la escala de la serie, no los patrones.
+
+Dos ejemplos de datos de modelos autorregresivos con diferentes parametros.
+
+Ar (1) ... yt = 18 -.8yt -1 +et
+
+Para un modelo AR (1)
+01 = 0, yt es igual a un ruido blanco
+01 = 1 y c = 0, yt es igual a caminata aleatoria
+01 = 1 y c!= 0, yt es igual a caminata aleatoria con deriva
+01= <0 , yt tiende aoscilar entre valores positivos y negativos
+
+mnormalmente se restringen ls modelos autorregresivos a datos estaiconarios, en cuyo casi
+se requiewren algunas restricciones en los valores  de los parametros
+para un modelo AR (1)= -1<01<1
+AR: -1<02<1, 01+02<1, 01-02<1
+
+Modelos de promedios móviles
+los modelos de promedios moviles se utilizan como un promedio móvil usando los errores de los pronosticos
+la ecuación se plantea
+yt=c+
