@@ -25,3 +25,6 @@ c2
 modar1 %>% forecast(h=10) %>% autoplot(include=80)
 
 ###############################estacional                                                                                                                           
+autoplot(AirPassengers)
+modar2 <- auto.arima(AirPassengers, seasonal = TRUE)
+modar2 %>% forecast(h=10) %>% autoplot(include=80)
