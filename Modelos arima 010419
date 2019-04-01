@@ -1,0 +1,27 @@
+Modelos arima no estacionales
+si combinamos la diferenciacion con la autorregresion y un modelo de promedios moviles, obtenemos un modelo ARIMA 
+no estacional. ARIMA es un acronimo de autorregresive integrated moving average. El modelo compelto se puede escribir como
+require (fpp2)
+autoplot (ausbeer)
+
+modar <- auto.arima(ausbeer, seasonal = FALSE)
+modar
+# modar = yt
+#yt = c -.9569(yt-1) - .9872(yt-2) - .9247(yt-3) - 1.0425(et-1)+ .1416 (et-2)
+#c = (media)*(1-ar(1))
+c= mean(ausbeer) * (1+.9569)
+c
+modar %>% forecast(h=10) %>% autoplot(include=80)
+
+########### Air passengers
+
+autoplot(AirPassengers)
+modar1 <- auto.arima(AirPassengers, seasonal = FALSE)
+modar1
+
+yt = c + .2243(yt-1) + .3689(yt-2) - .2391(yt-3) - .2391(yt-4) - .8519(et-1) + 2.6809(et-2)
+c2= mean(AirPassengers)*(1+.0971)
+c2
+modar1 %>% forecast(h=10) %>% autoplot(include=80)
+
+###############################estacional                                                                                                                           
