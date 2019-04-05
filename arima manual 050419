@@ -1,0 +1,36 @@
+bim <- read.csv ("C:/Users/sala-D19.RTIC-D19/Downloads/BIMBOA.MX (2) (2).csv")
+#usamos las bases de datos de bimbo y cemex
+#arima (p,d,q)
+install.packages("tseries")
+require (tseries)
+require (fpp)
+require(foreign)
+require(fpp2)
+
+bimbo <- ts(bim, frequency = 252, start = 2018)
+bimbo [1:253,1] <- bimbo [253:1,1]
+
+bimbo <- ts (bim, frequency = 252, start = 2018)
+#revisar si nuestra base es estacionaria
+#se aplica la prueba de raiz unitaria a traves de la funcion 
+# adf.test y esperamos que el p-value sea menor a .05
+adf.test(bimbo)
+dbimts <- diff(bimbo)  #aplicamos la primera deferenciacion con la funcion diff
+#DEBIDO a que la serie original no es estacionaria 
+adf.test(dbimts)
+
+#aplicamos dos correlogramas
+par(mfrow = c(1,2))
+acf(dbimts) #aqui aplicamos el numero de d que se asocia con los numeros del pro
+pacf(dbimts)
+
+modbim1 <- arima(dbimts, order = c(1,1,0))
+modbim2 <- arima(dbimts, order = c(2,1,0))
+modbim3 <- arima(dbimts, order = c(3,1,0))
+modbim4 <- arima(dbimts, order = c(4,1,0))
+modbim1
+modbim2
+modbim3
+modbim4
+modabim1 <- auto.arima(bimbo, seasonal = TRUE)
+modabim1
