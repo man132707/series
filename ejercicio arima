@@ -1,0 +1,73 @@
+######clase oco#######################
+install.packages("forecast")
+library (readxl)
+library (fpp)
+bim <- read.csv ("C:/Users/sala-D19.RTIC-D19/Downloads/BIMBOA.MX (2) (2).csv")
+
+bimbo <- ts(bim, frequency = 252, start = 2018)
+#revisar si nuestra base es estacionaria
+#se aplica la prueba de raiz unitaria a traves de la funcion 
+# adf.test y esperamos que el p-value sea menor a .05
+adf.test(bimbo)
+dbimts <- diff(bimbo)  #aplicamos la primera deferenciacion con la funcion diff
+#DEBIDO a que la serie original no es estacionaria 
+adf.test(dbimts)
+
+#aplicamos dos correlogramas
+par(mfrow = c(1,2))
+acf(dbimts) #aqui aplicamos el numero de d que se asocia con los numeros del pro
+pacf(dbimts)
+
+#una vez que se encuentran la forma del arima, en esta cas,
+# arima (0,1,q)
+# para encontrar este valor se proponen cuatro valores de q
+
+mod1 <- Arima(bimbo, order = c(0,1,1))
+mod1      # .49
+mod2 <- Arima(dbimts, order = c(0,1,2))
+mod2
+mod3 <- Arima(dbimts, order = c(0,1,3))
+mod3
+mod4 <- Arima(dbimts, order = c(0,1,4))
+mod4
+
+# Con base en el aicc meno se elige el modelo 1
+
+# el que tenga menor valor de aicc es el mejor modelo
+# promedios moviles = ma1 y ma2 ar= autoregresivo
+
+#entre estos dos modelos habria que revisar el valor del aicc y el menor valor
+# de aicc seria el mejor modelo con el criterio akaike
+# ahora hay que verificar si los residuales son ruido, para eso se propone utilizar
+#la prueba de ljung box y verificar que el p value sea mayor a 0.05 lo que indica
+# que los residuales de la serie de tiempo son ruido blanco
+
+modres <- residuals(mod1)
+Box.test(modres, lag = 12, type = "Ljung-Box") # p value sugiere residuales ruido blanco
+#residuales ruido blanco
+
+mod1 <- forecast(mod, h=12)
+plot(forecast(mod1, h=12), incluide=18) # dalos ultimos 18 datos para dar idea de como se comportsa
+
+mod1
+summary(mod1)
+
+
+
+
+modabim1 <- auto.arima(bimbo, seasonal = TRUE)
+modabim1
+#Revisar si nuestra serie es estacionaria 
+#se aplica la prueba de raiz unitaria a traves de la funcion 
+adf.test(sunspots)
+par(mfrow = c(1,2))
+acf(sunspots)
+
+mod1 <- Arima(assdsds = c(0,1,1))
+mod1      # .49
+mod2 <- Arima(dbimts, order = c(0,1,2))
+mod2
+mod3 <- Arima(dbimts, order = c(0,1,3))
+mod3
+mod4 <- Arima(dbimts, order = c(0,1,4))
+mod4
