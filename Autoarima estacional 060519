@@ -1,0 +1,29 @@
+##Vamos a hacer un ejercicio con una serie de tiempo estacional
+## La serie de tiempo que vamos a usar es AirPassengers
+# Lo primero que haremos sera graficarla
+require(fpp2)
+autoplot(AirPassengers)
+
+#Primero aplicamos la funcion autoarima par ver que se 
+# propone con los valores de p,d,q y P,D,Q
+
+aa <- auto.arima(AirPassengers)
+aa
+
+#el primero es el componente no estacional, el segundo es el componente estacional y
+#el 12 es la frecuencia 
+ggAcf (AirPassengers)
+ggPacf(AirPassengers)
+
+#lo que esperariamos es que solamente el componente estacional fuese el significativo
+#sin embargo en la gráfica se muestra que hay mas componentes significativos
+ggAcf (diff(AirPassengers))
+ggPacf(diff(AirPassengers))
+
+######################################################
+#########################################################
+########################################################
+
+bb <- forecast( aa, h=10)
+autoplot(bb)
+bb
