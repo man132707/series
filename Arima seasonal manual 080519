@@ -1,0 +1,42 @@
+require(fpp2)
+require(tseries)
+install.packages("dplyr")
+require(dplyr)
+install.packages("zoo")
+require(zoo)
+
+#Graficamos la serie gas ¿parece estacional? ¿de que es esta serie?
+
+autoplot (gas)
+
+#punto 1 vamos a revisar la estacionariedad 
+#utilizan adf.test y esperamos un p-value menor a 0.05 para saber si es estacionaria
+
+#vamos a ver si es estacionaria
+
+#Se aplica la prueba de raiz unitaria a través de la funcion 
+
+adf.test(gas)
+auto.arima(gas)
+
+
+# adf.test y esperamos que el valor sea menor al pvalue
+## como no es tarcoionaria se teien que aplicar una diferencia 
+gas1<- diff(gas)
+# de nuevo la prueba de raiz unitaria
+
+adf.test(gas1)
+gas1 %>% ggtsdisplay()
+
+### aplicamos autoarima para conocer los valores p,d,q 
+aa <- auto.arima(gas)
+aa
+### Valores estacionales 
+
+###### Manualmente de la siguiente manera
+## sergio
+gas %>% 
+  Arima(order=c(1,1,1), seasonal = c(1,1,1))
+## benjamin
+gas %>% 
+  Arima(order=c(1,1,1), seasonal = c(0,1,1))
